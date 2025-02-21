@@ -14,7 +14,14 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 
-const projects = [
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  link: string;
+}
+
+const projects: Project[] = [
   {
     id: "1",
     title: "Math-Chemy",
@@ -114,13 +121,32 @@ export default function App() {
           <Text
             style={[styles.text, darkMode ? styles.darkText : styles.lightText]}
           >
-            ✅ React, JavaScript, Python, Unity C#, C++
+            ✅ React, JavaScript, TypeScript, Python, Unity C#, C++
           </Text>
           <Text
             style={[styles.text, darkMode ? styles.darkText : styles.lightText]}
           >
             ✅ Web, Game, & AR Development
           </Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              darkMode ? styles.darkText : styles.lightText,
+            ]}
+          >
+            Projects
+          </Text>
+          <FlatList
+            data={projects}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <ProjectItem {...item} darkMode={darkMode} />
+            )}
+            scrollEnabled={false}
+          />
         </View>
 
         <View style={styles.section}>
@@ -172,26 +198,6 @@ export default function App() {
           </TouchableOpacity>
         </View>
 
-        {}
-        <View style={styles.section}>
-          <Text
-            style={[
-              styles.sectionTitle,
-              darkMode ? styles.darkText : styles.lightText,
-            ]}
-          >
-            Projects
-          </Text>
-          <FlatList
-            data={projects}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <ProjectItem {...item} darkMode={darkMode} />
-            )}
-            scrollEnabled={false}
-          />
-        </View>
-
         <View style={styles.section}>
           <View style={styles.switchContainer}>
             <Text
@@ -211,11 +217,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  projectTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
+  projectTitle: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
   container: { flex: 1, padding: 20 },
   lightContainer: { backgroundColor: "#f9f9f9" },
   darkContainer: { backgroundColor: "#1c1c1e" },
@@ -228,7 +230,6 @@ const styles = StyleSheet.create({
   section: { marginBottom: 20 },
   sectionTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
   text: { fontSize: 16, marginBottom: 5 },
-  link: { fontSize: 16, marginBottom: 5, textDecorationLine: "underline" },
   projectItem: { padding: 15, marginVertical: 8, borderRadius: 10 },
   lightProject: { backgroundColor: "#e0e0e0" },
   darkProject: { backgroundColor: "#333" },
